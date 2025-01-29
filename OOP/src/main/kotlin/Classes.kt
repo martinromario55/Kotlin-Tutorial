@@ -1,3 +1,6 @@
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
+
 //class Car (name: String, var model: String, var color: String, var doors: Int) {
 //    var name = name.trim()
 //
@@ -126,15 +129,15 @@ abstract class Vehicle() {
     abstract fun stop()
 }
 
-class Car(var name: String, var color: String, val engines: Int, val doors: Int): Vehicle() {
-    override fun move() {
-        TODO("Not yet implemented")
-    }
-
-    override fun stop() {
-        TODO("Not yet implemented")
-    }
-}
+//class Car(var name: String, var color: String, val engines: Int, val doors: Int): Vehicle() {
+//    override fun move() {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override fun stop() {
+//        TODO("Not yet implemented")
+//    }
+//}
 
 //  Structural Equality
 //class User(var firstName: String, var lastName: String, var age: Int) {
@@ -164,4 +167,97 @@ class Car(var name: String, var color: String, val engines: Int, val doors: Int)
 //}
 
 //  Structural Equality short code
-data class User(var firstName: String, var lastName: String, var age: Int)
+//data class User(var firstName: String, var lastName: String, var age: Int)
+
+//  Interface
+interface Engine {
+    fun startEngine()
+}
+
+class Car(var name: String, val color: String): Engine {
+    override fun startEngine() {
+        println("The car is starting the engine.")
+    }
+
+}
+
+class Truck(var name: String, val color: String): Engine {
+    override fun startEngine() {
+        println("The truck is starting the engine.")
+    }
+
+}
+
+class Plane(var name: String, val color: String): Engine {
+    override fun startEngine() {
+        println("The plane is starting the engine.")
+    }
+
+}
+
+//  Object Expression
+class Button(val text: String, val id: Int, onClickListener: onClickListener)
+
+class ClickListener(): onClickListener {
+    override fun onClick() {
+        TODO("Not yet implemented")
+    }
+
+}
+
+interface onClickListener {
+    fun onClick()
+}
+
+//  Delegation
+class App: A by FirstDelegate(), B by SecondDelagate() {
+    override fun print() {
+        TODO("Not yet implemented")
+    }
+
+    override fun print2() {
+        TODO("Not yet implemented")
+    }
+}
+
+interface A {
+    fun print()
+}
+
+interface B {
+    fun print2()
+}
+
+open class FirstDelegate: A {
+    override fun print() {
+        TODO("Not yet implemented")
+    }
+
+}
+
+open class SecondDelagate: B {
+    override fun print2() {
+        TODO("Not yet implemented")
+    }
+
+}
+
+//  Delegation with Properties
+class User {
+    var firstName by FormatDelegate()
+    var lastName by FormatDelegate()
+}
+
+class FormatDelegate: ReadWriteProperty<Any?, String> {
+    private var formattedString: String = ""
+
+    override fun getValue(thisRef: Any?, property: KProperty<*>): String {
+        return formattedString
+    }
+
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
+        formattedString = value.lowercase()
+    }
+
+
+}

@@ -85,13 +85,35 @@ fun main() {
 //
 //    getData(error)
 
-    val user1 = User("Martin", "Romario", 30)
-    val user2 = User("Martin", "Romario", 30)
+//    val user1 = User("Martin", "Romario", 30)
+//    val user2 = User("Martin", "Romario", 30)
+//
+//    println(user1 == user2)
+//
+//    println(user1)
+//    println(user2)
 
-    println(user1 == user2)
+//    val signInButton = Button("Login", 1234, object: onClickListener{
+//        override fun onClick() {
+//            TODO("Not yet implemented")
+//        }
+//    })
+//
+//    val signUpButton = Button("Sign Up", 4567, object: onClickListener{
+//        override fun onClick() {
+//            TODO("Not yet implemented")
+//        }
+//    })
 
-    println(user1)
-    println(user2)
+    val user = User()
+    with (user) {
+        firstName = "Martin"
+        lastName = "Romario"
+    }
+    with(user) {
+        println(firstName)
+        println(lastName)
+    }
 }
 
 //class Car {
