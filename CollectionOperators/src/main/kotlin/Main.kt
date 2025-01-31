@@ -162,15 +162,22 @@ fun main() {
 
     val oconnor = BaseballPlayer("O'Connor")
     val yankee = BaseballPlayer("Yankee")
-
+//
     val manUtd = Team<FootballPlayer>("Manchester United", mutableListOf(rooney))
     manUtd.addPlayers(ronaldo)
 
     val nyYankees = Team("New York Yankees", mutableListOf(oconnor))
     nyYankees.addPlayers(yankee)
+
+    val mixedList = mutableListOf(1, 2, 3, 4, 'a', 'b', 'c', "Hello", "World")
+    val specificList = getSpecificTypes<Int>(mixedList)
+
+    for (element in specificList) {
+        println(element)
+    }
 }
 
-class Team<T>(val name: String, val players: MutableList<T>) {
+class Team<T>(val name: String, val players: MutableList<T>) where T : Player, T : Listener {
     fun addPlayers(player: T) {
         if (players.contains(player)) {
             println("Player: ${(player as Player).name} is already in the team ${this.name}")
@@ -183,8 +190,31 @@ class Team<T>(val name: String, val players: MutableList<T>) {
 
 open class Player(val name: String)
 
-class FootballPlayer(name: String) : Player(name)
+class FootballPlayer(name: String) : Player(name), Listener {
+    override fun listen() {
+        TODO("Not yet implemented")
+    }
+}
+
 class BaseballPlayer(name: String) : Player(name)
+open class GamesPlayer(name: String) : Player(name)
+class CounterStrikePlayer(name: String) : GamesPlayer(name)
+
+//  Inline and Reified keywords
+inline fun <reified T> getSpecificTypes(list: List<Any>): List<T> {
+    val specificList = mutableListOf<T>()
+
+    for (element in list) {
+        if (element is T) {
+            specificList.add(element)
+        }
+    }
+    return specificList
+}
+
+interface Listener {
+    fun listen()
+}
 
 private fun searchElement(searchedElement: Int, numbers: MutableList<Int>): Int {
 //    Linear iteration
